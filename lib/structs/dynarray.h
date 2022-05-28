@@ -1,6 +1,11 @@
 #if !defined(stdlib)
 #include <stdlib.h>
 #endif // stdlib
+#if !defined(stdio)
+#include <stdio.h>
+#endif // stdio
+
+
 
 
 #if !defined(DYNARRAY)
@@ -25,19 +30,22 @@ DynIntArr newintarr() {
 	return ret;
 }
 
-void iarrpush(DynIntArr* arr, int* num) {
+void iarrpush(DynIntArr* arr, int num) {
 	if (arr->filled < arr->length) {
-		*(arr->start + arr->filled) = *num;
+		*(arr->start + arr->filled) = num;
+		arr->length += 1;
+		arr->filled += 1;
 	} else {
 		int* mem_block = malloc(sizeof(int) * (arr->length + 1));
 		for (int i = 0; i < arr->length; i++) {
 			*(mem_block + i) = *(arr->start + i);
 		}
-		*(mem_block + arr->length + 1) = *num;
+		*(mem_block + arr->length + 1) = num;
 		for (int i = 0; i < arr->length; i++) {
 			free(arr->start + i);
 		}
 		arr->start = mem_block;
+		arr->length += 1;
 	}
 }
 
