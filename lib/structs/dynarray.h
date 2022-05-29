@@ -60,7 +60,6 @@ int* idx(DynIntArr* arr, int idx) {
 }
 
 // TODO:
-// make iarrpush() reallocate by more than just 1 at a time
 // add search functions
 // add swap method
 // - add sort method
