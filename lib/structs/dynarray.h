@@ -55,7 +55,7 @@ void iarrpush(DynIntArr* arr, int num) {
 	}
 }
 
-int* idx(DynIntArr* arr, int idx) {
+int* darridx(DynIntArr* arr, int idx) {
 	return arr->start + idx;
 }
 
