@@ -49,9 +49,12 @@ void iarrpush(DynIntArr* arr, int num) {
 	}
 }
 
+int* idx(DynIntArr* arr, int idx) {
+	return arr->start + idx;
+}
+
 // TODO:
 // make iarrpush() reallocate by more than just 1 at a time
-// add idx functions
 // add search functions
 // add swap method
 // - add sort method
