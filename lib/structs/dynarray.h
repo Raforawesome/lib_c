@@ -31,21 +31,27 @@ DynIntArr newintarr() {
 }
 
 void iarrpush(DynIntArr* arr, int num) {
-	if (arr->filled < arr->length) {
-		*(arr->start + arr->filled) = num;
-		arr->length += 1;
-		arr->filled += 1;
-	} else {
-		int* mem_block = malloc(sizeof(int) * (arr->length + 1));
+	if (arr->filled < arr->length) {  // Check if capacity has been hit
+		*(arr->start + arr->filled) = num;  // Set to next available address
+		arr->filled += 1;  // Indicate we've used another slot
+	} else {  // We've hit capacity;  Allocate more memory
+		int* new_block = malloc(sizeof(int) * (arr->length + 10));  // Allocate a new block
+
+		// Copy over old block
 		for (int i = 0; i < arr->length; i++) {
-			*(mem_block + i) = *(arr->start + i);
+			*(new_block + i) = *(arr->start + i);
 		}
-		*(mem_block + arr->length + 1) = num;
+
+		*(new_block + arr->length) = num;  // Add our new variable to the block
+		
+		// De-allocate old block
 		for (int i = 0; i < arr->length; i++) {
 			free(arr->start + i);
 		}
-		arr->start = mem_block;
-		arr->length += 1;
+
+		arr->length += 10;  // We added 10 more slots
+		arr->filled += 1;  // Filled 1 more slot
+		arr->start = new_block;  // Replace old block with new block
 	}
 }
 
