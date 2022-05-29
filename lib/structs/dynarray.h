@@ -59,6 +59,14 @@ int* darridx(DynIntArr* arr, int idx) {
 	return arr->start + idx;
 }
 
+int darrfind(DynIntArr* arr, int target) {
+	for (int i = 0; i < arr->filled; i++) {
+		if (*darridx(arr, i) == target) {
+			return i;
+		}
+	}
+}
+
 // TODO:
 // add search functions
 // add swap method
