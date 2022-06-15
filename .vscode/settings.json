@@ -1,6 +1,7 @@
 {
 	"C_Cpp.errorSquiggles": "Enabled",
 	"files.associations": {
-		"dynarray.h": "c"
+		"dynarray.h": "c",
+		"stdio.h": "c"
 	}
 }
