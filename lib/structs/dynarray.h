@@ -7,7 +7,6 @@
 
 
 
-
 #if !defined(DYNARRAY)
 #define DYNARRAY
 
@@ -16,19 +15,12 @@ struct DynIntArr {
 	int length;
 	int filled;
 	int* start;
+	void (*push)(struct DynIntArr* arr, int num);
+	int (*idx)(struct DynIntArr* arr, int idx);
+	int (*find)(struct DynIntArr* arr, int target);
 };
-
 typedef struct DynIntArr DynIntArr;
 
-
-DynIntArr newintarr() {
-	int* addr = (int*) malloc(sizeof(int));
-	DynIntArr ret;
-	ret.length = 1;
-	ret.filled = 0;
-	ret.start = addr;
-	return ret;
-}
 
 void iarrpush(DynIntArr* arr, int num) {
 	if (arr->filled < arr->length) {  // Check if capacity has been hit
@@ -55,16 +47,29 @@ void iarrpush(DynIntArr* arr, int num) {
 	}
 }
 
-int* darridx(DynIntArr* arr, int idx) {
-	return arr->start + idx;
+int diarridx(DynIntArr* arr, int idx) {
+	return *(arr->start + idx);
 }
 
-int darrfind(DynIntArr* arr, int target) {
+int diarrfind(DynIntArr* arr, int target) {
 	for (int i = 0; i < arr->filled; i++) {
-		if (*darridx(arr, i) == target) {
+		if (diarridx(arr, i) == target) {
 			return i;
 		}
 	}
+	return -1;
+}
+
+DynIntArr newintarr() {
+	int* addr = (int*) malloc(sizeof(int));
+	DynIntArr ret;
+	ret.length = 1;
+	ret.filled = 0;
+	ret.start = addr;
+	ret.push = &iarrpush;
+	ret.idx = &diarridx;
+	ret.find = &diarrfind;
+	return ret;
 }
 
 // TODO:
